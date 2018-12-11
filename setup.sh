@@ -14,6 +14,8 @@ function install_system_tools() {
    # source control tools are so go get works properly.
    # net-tools: for ifconfig
    yum -y install yum-fastestmirror git mercurial subversion curl nc gcc net-tools wget
+   yum -y install tmux atop python-pip python2-devel -y
+   pip install glances
 }
 
 # Add a repository to yum so that we can download
@@ -33,7 +35,7 @@ EOF
 function install_docker() {
    add_docker_yum_repo
 
-   yum -y install docker-engine-1.10.3 docker-engine-selinux-1.10.3
+   yum -y install docker-engine-1.13.1 docker-engine-selinux-1.13.1
 }
 
 # Set docker daemon comand line options. We modify systemd configuration
@@ -78,7 +80,7 @@ function ensure_file_is_downloaded() {
 # Install go at the given version. The desired version string is passed as the
 # first parameter of the function.
 # Example usage:
-# install_go "1.6.2"
+# install_go $goVersion
 function install_go() {
    # Creating a subshell so that changes in this function do not "escape" the
    # function. For example change directory.
@@ -205,9 +207,9 @@ install_docker
 configure_and_start_docker
 
 # Get the go and etcd releases.
-install_go "1.6.3"
+install_go "1.11.2"
 # Latest kubernetes requires a recent version of etcd
-install_etcd "v3.0.10"
+install_etcd "v3.3.10"
 
 # HOST_GOPATH is passed by the VagrantFile looking at the Mac's environment.
 GUEST_GOPATH=/home/vagrant/gopath

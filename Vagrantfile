@@ -13,8 +13,8 @@ $gopath = ""
 $expose_docker_tcp = true
 $mount_users_dir = true
 $vb_gui = false
-$vb_memory = 1024
-$vb_cpus = 1
+$vb_memory = 2048
+$vb_cpus = 2
 $home = ENV["HOME"]
 
 if File.exist?(CONFIG)
@@ -38,6 +38,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |c|
     config.vm.hostname = vm_name
 
     config.vm.box = "centos/7"
+    config.vm.box_version = "1811.01"
 
     ip = "10.1.2.3"
     config.vm.network "private_network", ip: ip
